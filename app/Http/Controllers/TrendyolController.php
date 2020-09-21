@@ -8,7 +8,7 @@ use GuzzleHttp\Client;
 
 class TrendyolController extends Controller
 {
-    public function yazdir($array){
+    public function executeOrder($array){
         if(is_array($array))
         {
             foreach ($array as $item) {
@@ -19,7 +19,7 @@ class TrendyolController extends Controller
                     }
                     $this->saveToDb($item['id'],$item['parentId'],$item['name'],0);
                     $item=$item['subCategories'];
-                    $this->yazdir($item);
+                    $this->executeOrder($item);
                     continue;
                 }else{
                     $this->saveToDb($item['id'],$item['parentId'],$item['name'],1);
@@ -38,8 +38,8 @@ class TrendyolController extends Controller
         $data = $response->getBody();
         $data = json_decode($data,true);
         $cats = $data;
-        $this->yazdir($cats['categories']);
-        echo "<h1 class='font-size:50px;'>BAŞARDIK EFE KARDEŞ</h1>";
+        $this->executeOrder($cats['categories']);
+        echo "<h1 class='font-size:50px;'>Yazdırma başarılı</h1>";
     }
 
 
