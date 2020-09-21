@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
 use App\Trendyol;
 use GuzzleHttp\Client;
 
@@ -27,19 +25,15 @@ class TrendyolController extends Controller
             }
         }
     }
-    public function isArray($cats){
-    }
-    public function getData(){
-        $client = new Client([
-            'headers'=>['content-type'=> "application/json","Accept"=>"application/json"],
-            ]);
 
+    public function getData(){
+        $client = new Client(['headers'=>['content-type'=> "application/json","Accept"=>"application/json"],]);
         $response = $client->request('GET','https://api.trendyol.com/sapigw/product-categories');
         $data = $response->getBody();
         $data = json_decode($data,true);
         $cats = $data;
         $this->executeOrder($cats['categories']);
-        echo "<h1 class='font-size:50px;'>Yazdırma başarılı</h1>";
+        echo "<h1 class='font-size:50px;'>Executed successfully. Check the database.</h1>";
     }
 
 
@@ -54,6 +48,5 @@ class TrendyolController extends Controller
             $urun->status = $status;
             $urun->site_id = $site_id;
             $urun->save();
-
     }
 }
