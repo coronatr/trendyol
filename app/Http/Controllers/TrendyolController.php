@@ -34,7 +34,7 @@ class TrendyolController extends Controller
             'headers'=>['content-type'=> "application/json","Accept"=>"application/json"],
             ]);
 
-        $response = $client->request('GET','localhost/product-categories.json');
+        $response = $client->request('GET','https://api.trendyol.com/sapigw/product-categories');
         $data = $response->getBody();
         $data = json_decode($data,true);
         $cats = $data;
